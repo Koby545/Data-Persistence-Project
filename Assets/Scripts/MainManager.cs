@@ -10,6 +10,7 @@ public class MainManager : MonoBehaviour
     public int LineCount = 6;
     public Rigidbody Ball;
 
+    public Text BestScoreText;
     public Text ScoreText;
     public GameObject GameOverText;
     
@@ -18,10 +19,32 @@ public class MainManager : MonoBehaviour
     
     private bool m_GameOver = false;
 
-    
+
+    private string currentPlayerName;
+    private int bestScore;
+    private string bestScorePlayerName;
+
+
     // Start is called before the first frame update
     void Start()
     {
+        DataManager.PlayerData playerData = DataManager.LoadPlayerData();
+
+        if (playerData != null)
+        {
+            currentPlayerName = playerData.name;
+            bestScore = playerData.score;
+            bestScorePlayerName = playerData.name;
+        }
+        else
+        {
+            currentPlayerName = "Player";
+            bestScore = 0;
+            bestScorePlayerName = "None";
+        }
+
+        UpdateBestScoreText();
+
         const float step = 0.6f;
         int perLine = Mathf.FloorToInt(4.0f / step);
         
@@ -59,6 +82,10 @@ public class MainManager : MonoBehaviour
             {
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
             }
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                SceneManager.LoadScene(0);
+            }
         }
     }
 
@@ -66,11 +93,28 @@ public class MainManager : MonoBehaviour
     {
         m_Points += point;
         ScoreText.text = $"Score : {m_Points}";
+
+        if (m_Points > bestScore)
+        {
+            bestScore = m_Points;
+            bestScorePlayerName = currentPlayerName;
+            UpdateBestScoreText();
+
+            // Save the new best score
+            DataManager.SavePlayerData(bestScorePlayerName, bestScore);
+            
+        }
     }
 
     public void GameOver()
     {
+        ScoreBoardManager.Instance.AddOrUpdatePlayer(currentPlayerName, m_Points);
         m_GameOver = true;
         GameOverText.SetActive(true);
+    }
+
+    private void UpdateBestScoreText()
+    {
+        BestScoreText.text = $"Best Score : {bestScorePlayerName} : {bestScore}";
     }
 }
