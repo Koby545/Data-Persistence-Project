@@ -40,14 +40,6 @@ The project is structured into separate components:
 * Break all bricks to score points
 * Try to reach the highest score and enter the leaderboard
 
-## 📽 Demo
-
-([Add a short gameplay video here](https://learn.unity.com/submission/676c119dedbc2a1a84d4c35c))
-
-## 📦 Build
-
-
-
 ## 🧠 What I Learned
 
 * Managing game state and UI flow
