@@ -42,7 +42,7 @@ The project is structured into separate components:
 
 ## 📽 Demo
 
-https://learn.unity.com/submission/676c119dedbc2a1a84d4c35c
+([Add a short gameplay video here](https://learn.unity.com/submission/676c119dedbc2a1a84d4c35c))
 
 ## 📦 Build
 
